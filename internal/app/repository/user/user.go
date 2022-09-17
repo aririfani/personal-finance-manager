@@ -21,3 +21,13 @@ func (r *repo) CreateUser(ctx context.Context, user User) (returnData User, err 
 
 	return
 }
+
+// GetUserByEmail ...
+func (r *repo) GetUserByEmail(ctx context.Context, user User) (returnData User, err error) {
+	returnData, err = r.DB.GetUserByEmail(ctx, user)
+	if err != nil {
+		return
+	}
+
+	return
+}

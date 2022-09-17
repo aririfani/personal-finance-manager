@@ -1,7 +1,6 @@
 package http
 
 type ResponseDesc struct {
-	ID string `json:"id"`
 	EN string `json:"en"`
 }
 

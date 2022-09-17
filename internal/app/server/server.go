@@ -50,6 +50,7 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 	w.Route("/v1", func(r chi.Router) {
 		router := r.(httppkg.Router)
 		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))
+		router.Action(httppkg.NewRest(http.MethodPost, "/login", handler.UserHandler().Login))
 	})
 	return
 }

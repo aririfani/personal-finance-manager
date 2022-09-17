@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"github.com/aririfani/personal-finance-manager/internal/pkg/errors"
 	"net/http"
 )
 
@@ -44,6 +45,32 @@ func WriteError(w http.ResponseWriter, r *http.Request, err error) {
 		http.StatusInternalServerError,
 		NewMeta("1.0", "healthy", "development"),
 	)
+	if _, ok := err.(*errors.InternalError); ok {
+		response = NewFailed(
+			"0001",
+			NewResponseDesc(err.Error()),
+			http.StatusInternalServerError,
+			NewMeta("1.0", "healthy", "development"),
+		)
+	}
+
+	if _, ok := err.(*errors.Unauthorized); ok {
+		response = NewFailed(
+			"0002",
+			NewResponseDesc(err.Error()),
+			http.StatusUnauthorized,
+			NewMeta("1.0", "healthy", "development"),
+		)
+	}
+
+	if _, ok := err.(*errors.BadRequest); ok {
+		response = NewFailed(
+			"0003",
+			NewResponseDesc(err.Error()),
+			http.StatusBadRequest,
+			NewMeta("1.0", "healthy", "development"),
+		)
+	}
 
 	compose(w, r, response, response.HttpStatus)
 }

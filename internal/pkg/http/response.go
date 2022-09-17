@@ -3,8 +3,8 @@ package http
 type optionSuccess func(*Success)
 type optionFailed func(*Failed)
 
-func NewResponseDesc(id string) ResponseDesc {
-	return ResponseDesc{ID: id}
+func NewResponseDesc(en string) ResponseDesc {
+	return ResponseDesc{EN: en}
 }
 
 func NewMeta(version string, status string, apiEnvironment string) Meta {

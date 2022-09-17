@@ -6,6 +6,7 @@ import (
 	"github.com/aririfani/personal-finance-manager/internal/app/appcontext"
 	"github.com/aririfani/personal-finance-manager/internal/app/handler"
 	"github.com/aririfani/personal-finance-manager/internal/app/server"
+	tokenJWT "github.com/aririfani/personal-finance-manager/internal/pkg/token"
 	"log"
 	"net"
 	"net/http"
@@ -28,8 +29,9 @@ func Run() {
 		log.Fatal(err)
 	}
 
+	token := tokenJWT.New(tokenJWT.WithIssuer(cfg.GetString("app.issuer")), tokenJWT.WithSecretKey(cfg.GetString("app.secret_key")))
 	repo := app.WiringRepository(db)
-	srv := app.WiringService(repo)
+	srv := app.WiringService(repo, token)
 
 	s := server.NewServer(
 		net.JoinHostPort(cfg.GetString("server.host"), cfg.GetString("server.port")),

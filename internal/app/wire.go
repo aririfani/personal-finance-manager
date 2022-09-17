@@ -6,6 +6,7 @@ import (
 	"github.com/aririfani/personal-finance-manager/internal/app/service"
 	userService "github.com/aririfani/personal-finance-manager/internal/app/service/user"
 	"github.com/aririfani/personal-finance-manager/internal/pkg/driver/driversql"
+	"github.com/aririfani/personal-finance-manager/internal/pkg/token"
 )
 
 func WiringRepository(db *driversql.Database) *repository.Repositories {
@@ -14,8 +15,8 @@ func WiringRepository(db *driversql.Database) *repository.Repositories {
 	}
 }
 
-func WiringService(repo *repository.Repositories) *service.Services {
+func WiringService(repo *repository.Repositories, token token.IToken) *service.Services {
 	return &service.Services{
-		User: userService.NewSrv(repo),
+		User: userService.NewSrv(repo, token),
 	}
 }

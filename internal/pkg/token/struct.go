@@ -1,0 +1,25 @@
+package token
+
+import (
+	"github.com/golang-jwt/jwt/v4"
+	"time"
+)
+
+// Payload define payload body for token
+type Payload struct {
+	FullName string
+	Phone    string
+	Email    string
+}
+
+type Claims struct {
+	Payload
+	jwt.RegisteredClaims
+}
+
+type GetToken struct {
+	RefreshToken          string
+	AccessToken           string
+	RefreshTokenExpiresAt time.Time
+	AccessTokenExpiresAt  time.Time
+}
