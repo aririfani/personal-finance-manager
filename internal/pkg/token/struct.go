@@ -7,6 +7,7 @@ import (
 
 // Payload define payload body for token
 type Payload struct {
+	ID       int64
 	FullName string
 	Phone    string
 	Email    string

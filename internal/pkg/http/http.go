@@ -31,18 +31,18 @@ type Handler func(w http.ResponseWriter, r *http.Request) (interface{}, error)
 func (handler Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	data, err := handler(w, r)
 	if err != nil {
-		WriteError(w, r, err)
+		WriteError(w, r, err, 500)
 		return
 	}
 
 	WriteSuccess(w, r, data)
 }
 
-func WriteError(w http.ResponseWriter, r *http.Request, err error) {
+func WriteError(w http.ResponseWriter, r *http.Request, err error, errorCode int) {
 	response := NewFailed(
 		"0001",
 		NewResponseDesc(err.Error()),
-		http.StatusInternalServerError,
+		errorCode,
 		NewMeta("1.0", "healthy", "development"),
 	)
 	if _, ok := err.(*errors.InternalError); ok {

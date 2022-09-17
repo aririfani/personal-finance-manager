@@ -69,9 +69,10 @@ func (s *srv) Login(ctx context.Context, param User) (returnData LoginRes, err e
 
 	getTokenRes.AccessToken, accessTokenExpiresAt, err = s.token.GetImplicitToken(
 		token.Payload{
-			Email:    userRepo.Email,
-			Phone:    userRepo.Phone,
-			FullName: userRepo.FullName,
+			ID:       res.ID,
+			Email:    res.Email,
+			Phone:    res.Phone,
+			FullName: res.FullName,
 		}, expiredAt)
 
 	getTokenRes.AccessTokenExpiresAt = time.Unix(accessTokenExpiresAt, 0)

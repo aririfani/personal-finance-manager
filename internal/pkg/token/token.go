@@ -80,12 +80,12 @@ func (t *Token) createToken(payload Payload, ttl uint64) (tokenStr string, expir
 	}
 
 	if ttl > 0 {
-		expiresAt = time.Now().Add(time.Duration(ttl) * time.Minute).Unix()
-		jwtStandardClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(20 * time.Hour))
+		jwtStandardClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(time.Duration(ttl) * time.Minute))
 	}
 
 	claims := Claims{
 		Payload: Payload{
+			ID:       payload.ID,
 			FullName: payload.FullName,
 			Phone:    payload.Phone,
 			Email:    payload.Email,

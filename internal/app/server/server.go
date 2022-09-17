@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/aririfani/personal-finance-manager/internal/app/handler"
 	httppkg "github.com/aririfani/personal-finance-manager/internal/pkg/http"
-	"github.com/go-chi/chi/v5"
 	"log"
 	"net/http"
 	"os"
@@ -43,16 +42,6 @@ func (s *server) GetHTTPServer() *http.Server {
 		WriteTimeout: s.WriteTimeout,
 		IdleTimeout:  s.IdleTimeout,
 	}
-}
-
-func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
-	w = httppkg.NewRouter(chi.NewRouter())
-	w.Route("/v1", func(r chi.Router) {
-		router := r.(httppkg.Router)
-		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))
-		router.Action(httppkg.NewRest(http.MethodPost, "/login", handler.UserHandler().Login))
-	})
-	return
 }
 
 // GracefullShutdown ...
