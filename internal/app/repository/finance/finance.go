@@ -51,3 +51,13 @@ func (r *repo) UpdateFinance(ctx context.Context, finance Finance) (returnData F
 
 	return
 }
+
+// GetFinanceByID ...
+func (r *repo) GetFinanceByID(ctx context.Context, id int64) (returnData Finance, err error) {
+	returnData, err = r.DB.GetFinanceByID(ctx, id)
+	if err != nil {
+		return
+	}
+
+	return
+}

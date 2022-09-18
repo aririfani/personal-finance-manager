@@ -89,3 +89,14 @@ func (s *srv) UpdateFinance(ctx context.Context, param Finance) (returnData Fina
 	_ = deepcopier.Copy(res).To(&returnData)
 	return
 }
+
+// GetFinanceByID ...
+func (s *srv) GetFinanceByID(ctx context.Context, id int64) (returnData Finance, err error) {
+	res, err := s.repo.Finance.GetFinanceByID(ctx, id)
+	if err != nil {
+		return
+	}
+
+	_ = deepcopier.Copy(res).To(&returnData)
+	return
+}

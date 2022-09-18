@@ -14,4 +14,7 @@ type Repository interface {
 
 	// UpdateFinance ...
 	UpdateFinance(ctx context.Context, finance Finance) (returnData Finance, err error)
+
+	// GetFinanceByID ...
+	GetFinanceByID(ctx context.Context, id int64) (returnData Finance, err error)
 }

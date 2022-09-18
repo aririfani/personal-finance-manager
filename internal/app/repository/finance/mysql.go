@@ -71,3 +71,13 @@ func (d *db) UpdateFinance(ctx context.Context, finance Finance) (returnData Fin
 
 	return
 }
+
+// GetFinanceByID ...
+func (d *db) GetFinanceByID(ctx context.Context, id int64) (returnData Finance, err error) {
+	err = d.DB.Instance.WithContext(ctx).Where("id =?", id).First(&returnData).Error
+	if err != nil {
+		return
+	}
+
+	return
+}

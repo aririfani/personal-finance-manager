@@ -27,6 +27,7 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 			router.Action(httppkg.NewRest(http.MethodPost, "/", handler.FinanceHandler().CreateFinance))
 			router.Action(httppkg.NewRest(http.MethodGet, "/", handler.FinanceHandler().GetAllFinance))
 			router.Action(httppkg.NewRest(http.MethodPatch, "/{id}", handler.FinanceHandler().UpdateFinance))
+			router.Action(httppkg.NewRest(http.MethodGet, "/{id}", handler.FinanceHandler().GetFinanceByID))
 		})
 
 		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))

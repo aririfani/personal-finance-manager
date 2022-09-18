@@ -97,17 +97,10 @@ func (h *handler) UpdateFinance(w http.ResponseWriter, r *http.Request) (returnD
 // GetFinanceByID ...
 func (h *handler) GetFinanceByID(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error) {
 	ctx := r.Context()
-	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
-	limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))
-	userID := r.Context().Value("claims").(jwt.MapClaims)["ID"].(float64)
 
-	request := finance.GetAllFinanceReq{
-		Page:   page,
-		Limit:  limit,
-		UserID: int64(userID),
-	}
-
-	returnData, err = h.service.Finance.GetAllFinance(ctx, request)
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	returnData, err = h.service.Finance.GetFinanceByID(ctx, id)
+	
 	w.Header().Add("Content-Type", "application/json")
 
 	return
