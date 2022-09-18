@@ -16,5 +16,5 @@ type Service interface {
 	GetAllAccount(ctx context.Context, req GetAllAccountReq) (returnData GetAllAccountRes, err error)
 
 	// DeleteAccount ...
-	DeleteAccount(ctx context.Context) (returnData Account, err error)
+	DeleteAccount(ctx context.Context, id int64) (returnData Account, err error)
 }

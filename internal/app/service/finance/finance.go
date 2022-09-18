@@ -100,3 +100,19 @@ func (s *srv) GetFinanceByID(ctx context.Context, id int64) (returnData Finance,
 	_ = deepcopier.Copy(res).To(&returnData)
 	return
 }
+
+// DeleteFinanceByID ...
+func (s *srv) DeleteFinanceByID(ctx context.Context, id int64) (returnData Finance, err error) {
+	res, err := s.repo.Finance.GetFinanceByID(ctx, id)
+	if err != nil {
+		return
+	}
+
+	err = s.repo.Finance.DeleteFinanceByID(ctx, id)
+	if err != nil {
+		return
+	}
+
+	_ = deepcopier.Copy(res).To(&returnData)
+	return
+}

@@ -17,6 +17,7 @@ type Handler interface {
 	GetAllFinance(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 	UpdateFinance(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 	GetFinanceByID(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
+	DeleteFinanceByID(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 }
 
 type handler struct {
@@ -104,6 +105,18 @@ func (h *handler) GetFinanceByID(w http.ResponseWriter, r *http.Request) (return
 
 	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	returnData, err = h.service.Finance.GetFinanceByID(ctx, id)
+
+	w.Header().Add("Content-Type", "application/json")
+
+	return
+}
+
+// DeleteFinanceByID ...
+func (h *handler) DeleteFinanceByID(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error) {
+	ctx := r.Context()
+
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	returnData, err = h.service.Finance.DeleteFinanceByID(ctx, id)
 
 	w.Header().Add("Content-Type", "application/json")
 

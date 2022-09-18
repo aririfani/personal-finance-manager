@@ -61,3 +61,9 @@ func (r *repo) GetFinanceByID(ctx context.Context, id int64) (returnData Finance
 
 	return
 }
+
+// DeleteFinanceByID ...
+func (r *repo) DeleteFinanceByID(ctx context.Context, id int64) (err error) {
+	err = r.DB.DeleteFinanceByID(ctx, id)
+	return
+}

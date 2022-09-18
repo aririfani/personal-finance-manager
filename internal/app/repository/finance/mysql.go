@@ -69,7 +69,7 @@ func (d *db) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnDat
 
 // CountTotalFinance ...
 func (d *db) CountTotalFinance(ctx context.Context, req GetAllFinanceReq) (total int64, err error) {
-	query := d.DB.Instance.WithContext(ctx).Where("user_id =?", req.UserID).Table("finances")
+	query := d.DB.Instance.WithContext(ctx).Where("user_id =?", req.UserID).Table("finances").Where("deleted_at IS NULL")
 
 	if strings.Compare(req.Title, "") != 0 {
 		searchTitle := strings.ToLower(req.Title)
@@ -108,5 +108,11 @@ func (d *db) GetFinanceByID(ctx context.Context, id int64) (returnData Finance, 
 		return
 	}
 
+	return
+}
+
+// DeleteFinanceByID ...
+func (d *db) DeleteFinanceByID(ctx context.Context, id int64) (err error) {
+	err = d.DB.Instance.WithContext(ctx).Where("id =?", id).Delete(&Finance{}).Error
 	return
 }

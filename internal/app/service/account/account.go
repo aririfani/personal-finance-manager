@@ -104,6 +104,15 @@ func (s srv) GetAllAccount(ctx context.Context, req GetAllAccountReq) (returnDat
 }
 
 // DeleteAccount ...
-func (s srv) DeleteAccount(ctx context.Context) (returnData Account, err error) {
+func (s srv) DeleteAccount(ctx context.Context, id int64) (returnData Account, err error) {
+	res, err := s.repo.Account.GetAccountByID(ctx, id)
+	if err != nil {
+		return
+	}
+	_, err = s.repo.Account.DeleteAccount(ctx, id)
+	if err != nil {
+		return
+	}
+	_ = deepcopier.Copy(res).To(&returnData)
 	return
 }

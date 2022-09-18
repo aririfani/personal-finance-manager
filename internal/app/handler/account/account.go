@@ -84,6 +84,11 @@ func (h *handler) UpdateAccount(w http.ResponseWriter, r *http.Request) (returnD
 
 // DeleteAccount ...
 func (h *handler) DeleteAccount(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error) {
+	ctx := r.Context()
+
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	returnData, err = h.service.Account.DeleteAccount(ctx, id)
+	w.Header().Add("Content-Type", "application/json")
 	return
 }
 

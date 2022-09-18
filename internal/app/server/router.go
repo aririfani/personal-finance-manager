@@ -19,6 +19,7 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 			router.Action(httppkg.NewRest(http.MethodPatch, "/{id}", handler.AccountHandler().UpdateAccount))
 			router.Action(httppkg.NewRest(http.MethodGet, "/", handler.AccountHandler().GetAllAccount))
 			router.Action(httppkg.NewRest(http.MethodGet, "/{id}", handler.AccountHandler().GetByAccountByID))
+			router.Action(httppkg.NewRest(http.MethodDelete, "/{id}", handler.AccountHandler().DeleteAccount))
 		})
 
 		router.Route("/finance", func(r chi.Router) {
@@ -28,6 +29,7 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 			router.Action(httppkg.NewRest(http.MethodGet, "/", handler.FinanceHandler().GetAllFinance))
 			router.Action(httppkg.NewRest(http.MethodPatch, "/{id}", handler.FinanceHandler().UpdateFinance))
 			router.Action(httppkg.NewRest(http.MethodGet, "/{id}", handler.FinanceHandler().GetFinanceByID))
+			router.Action(httppkg.NewRest(http.MethodDelete, "/{id}", handler.FinanceHandler().DeleteFinanceByID))
 		})
 
 		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))

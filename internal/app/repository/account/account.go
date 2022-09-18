@@ -53,8 +53,8 @@ func (r *repo) GetAllAccount(ctx context.Context, req GetAllAccountReq) (returnD
 }
 
 // DeleteAccount ...
-func (r *repo) DeleteAccount(ctx context.Context) (returnData Account, err error) {
-	returnData, err = r.DB.DeleteAccount(ctx)
+func (r *repo) DeleteAccount(ctx context.Context, id int64) (returnData Account, err error) {
+	returnData, err = r.DB.DeleteAccount(ctx, id)
 	if err != nil {
 		return
 	}

@@ -83,13 +83,17 @@ func (d *db) GetAllAccount(ctx context.Context, req GetAllAccountReq) (returnDat
 }
 
 // DeleteAccount ...
-func (d *db) DeleteAccount(ctx context.Context) (returnData Account, err error) {
+func (d *db) DeleteAccount(ctx context.Context, id int64) (returnData Account, err error) {
+	err = d.DB.Instance.WithContext(ctx).Where("id = ?", id).Delete(&Account{}).Error
+	if err != nil {
+		return
+	}
 	return
 }
 
 // CountTotalAccount ...
 func (d *db) CountTotalAccount(ctx context.Context, userID int64) (total int64, err error) {
-	err = d.DB.Instance.WithContext(ctx).Where("user_id =?", userID).Table("accounts").Count(&total).Error
+	err = d.DB.Instance.WithContext(ctx).Where("user_id =?", userID).Table("accounts").Where("deleted_at IS NULL").Count(&total).Error
 	if err != nil {
 		return
 	}

@@ -16,7 +16,7 @@ type Repository interface {
 	GetAllAccount(ctx context.Context, req GetAllAccountReq) (returnData []Account, err error)
 
 	// DeleteAccount ...
-	DeleteAccount(ctx context.Context) (returnData Account, err error)
+	DeleteAccount(ctx context.Context, id int64) (returnData Account, err error)
 
 	// CountTotalAccount ...
 	CountTotalAccount(ctx context.Context, userID int64) (total int64, err error)
