@@ -59,9 +59,13 @@ func (h *handler) GetAllFinance(w http.ResponseWriter, r *http.Request) (returnD
 	userID := r.Context().Value("claims").(jwt.MapClaims)["ID"].(float64)
 
 	request := finance.GetAllFinanceReq{
-		Page:   page,
-		Limit:  limit,
-		UserID: int64(userID),
+		Page:      page,
+		Limit:     limit,
+		UserID:    int64(userID),
+		Title:     r.URL.Query().Get("title"),
+		StartDate: r.URL.Query().Get("start_date"),
+		EndDate:   r.URL.Query().Get("end_date"),
+		Type:      r.URL.Query().Get("type"),
 	}
 
 	returnData, err = h.service.Finance.GetAllFinance(ctx, request)
@@ -100,7 +104,7 @@ func (h *handler) GetFinanceByID(w http.ResponseWriter, r *http.Request) (return
 
 	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	returnData, err = h.service.Finance.GetFinanceByID(ctx, id)
-	
+
 	w.Header().Add("Content-Type", "application/json")
 
 	return

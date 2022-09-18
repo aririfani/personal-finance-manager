@@ -23,9 +23,13 @@ func (Finance) TableName() string {
 
 // GetAllFinanceReq ...
 type GetAllFinanceReq struct {
-	UserID int64 `json:"user_id"`
-	Page   int   `json:"page"`
-	Limit  int   `json:"limit"`
+	UserID    int64  `json:"user_id"`
+	Page      int    `json:"page"`
+	Limit     int    `json:"limit"`
+	Title     string `json:"title"`
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
+	Type      string `json:"type"`
 }
 
 type Res struct {

@@ -48,7 +48,7 @@ func (s *srv) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnDa
 		financeRepo = append(financeRepo, financeTmp)
 	}
 
-	totalData, err := s.repo.Finance.CountTotalFinance(ctx, financeReq.UserID)
+	totalData, err := s.repo.Finance.CountTotalFinance(ctx, financeReq)
 	if err != nil {
 		return
 	}

@@ -3,6 +3,7 @@ package finance
 import (
 	"context"
 	"github.com/aririfani/personal-finance-manager/internal/pkg/driver/driversql"
+	"strings"
 )
 
 type db struct {
@@ -44,6 +45,19 @@ func (d *db) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnDat
 		query = query.Offset(offset).Limit(req.Limit)
 	}
 
+	if strings.Compare(req.Title, "") != 0 {
+		searchTitle := strings.ToLower(req.Title)
+		query = query.Where("LOWER(title) LIKE ?", "%"+searchTitle+"%")
+	}
+
+	if strings.Compare(req.Type, "") != 0 {
+		query = query.Where("type =?", req.Type)
+	}
+
+	if strings.Compare(req.StartDate, "") != 0 && strings.Compare(req.EndDate, "") != 0 {
+		query = query.Where("transaction_date >= ?", req.StartDate).Where("transaction_date < ?", req.EndDate)
+	}
+
 	err = query.Find(&returnData).Error
 
 	if err != nil {
@@ -54,8 +68,23 @@ func (d *db) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnDat
 }
 
 // CountTotalFinance ...
-func (d *db) CountTotalFinance(ctx context.Context, userID int64) (total int64, err error) {
-	err = d.DB.Instance.WithContext(ctx).Where("user_id =?", userID).Table("finances").Count(&total).Error
+func (d *db) CountTotalFinance(ctx context.Context, req GetAllFinanceReq) (total int64, err error) {
+	query := d.DB.Instance.WithContext(ctx).Where("user_id =?", req.UserID).Table("finances")
+
+	if strings.Compare(req.Title, "") != 0 {
+		searchTitle := strings.ToLower(req.Title)
+		query = query.Where("LOWER(title) LIKE ?", "%"+searchTitle+"%")
+	}
+
+	if strings.Compare(req.Type, "") != 0 {
+		query = query.Where("type =?", req.Type)
+	}
+
+	if strings.Compare(req.StartDate, "") != 0 && strings.Compare(req.EndDate, "") != 0 {
+		query = query.Where("transaction_date >= ?", req.StartDate).Where("transaction_date < ?", req.EndDate)
+	}
+
+	err = query.Count(&total).Error
 	if err != nil {
 		return
 	}

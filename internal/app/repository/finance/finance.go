@@ -33,8 +33,8 @@ func (r *repo) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnD
 }
 
 // CountTotalFinance ...
-func (r *repo) CountTotalFinance(ctx context.Context, userID int64) (total int64, err error) {
-	total, err = r.DB.CountTotalFinance(ctx, userID)
+func (r *repo) CountTotalFinance(ctx context.Context, req GetAllFinanceReq) (total int64, err error) {
+	total, err = r.DB.CountTotalFinance(ctx, req)
 	if err != nil {
 		return
 	}

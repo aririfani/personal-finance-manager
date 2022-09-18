@@ -17,9 +17,13 @@ type Finance struct {
 
 // GetAllFinanceReq ...
 type GetAllFinanceReq struct {
-	UserID int64 `json:"user_id" deepcopier:"UserID"`
-	Page   int   `json:"page" deepcopier:"Page"`
-	Limit  int   `json:"limit" deepcopier:"Limit"`
+	UserID    int64  `json:"user_id" deepcopier:"UserID"`
+	Page      int    `json:"page" deepcopier:"Page"`
+	Limit     int    `json:"limit" deepcopier:"Limit"`
+	Title     string `json:"title"`
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
+	Type      string `json:"type"`
 }
 
 // GetAllFinanceRes ...
