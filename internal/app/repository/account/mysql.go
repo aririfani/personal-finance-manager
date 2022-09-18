@@ -2,7 +2,6 @@ package account
 
 import (
 	"context"
-	"fmt"
 	"github.com/aririfani/personal-finance-manager/internal/pkg/driver/driversql"
 )
 
@@ -71,7 +70,6 @@ func (d *db) GetAllAccount(ctx context.Context, req GetAllAccountReq) (returnDat
 	query := d.DB.Instance.WithContext(ctx).Table("accounts").Where("user_id =?", req.UserID)
 	if req != (GetAllAccountReq{}) {
 		offset := req.Limit * (req.Page - 1)
-		fmt.Println(offset)
 		query = query.Offset(offset).Limit(req.Limit)
 	}
 
