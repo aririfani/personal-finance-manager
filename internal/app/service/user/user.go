@@ -84,3 +84,14 @@ func (s *srv) Login(ctx context.Context, param User) (returnData LoginRes, err e
 
 	return
 }
+
+// Profile ...
+func (s *srv) Profile(ctx context.Context, id int64) (returnData Res, err error) {
+	res, err := s.repo.User.GetUserByID(ctx, id)
+	if err != nil {
+		return
+	}
+	_ = deepcopier.Copy(res).To(&returnData)
+
+	return
+}

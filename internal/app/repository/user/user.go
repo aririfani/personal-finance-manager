@@ -31,3 +31,13 @@ func (r *repo) GetUserByEmail(ctx context.Context, user User) (returnData User, 
 
 	return
 }
+
+// GetUserByID ...
+func (r *repo) GetUserByID(ctx context.Context, id int64) (returnData User, err error) {
+	returnData, err = r.DB.GetUserByID(ctx, id)
+	if err != nil {
+		return
+	}
+
+	return
+}

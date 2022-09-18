@@ -44,3 +44,12 @@ func (d *db) GetUserByEmail(ctx context.Context, user User) (returnData User, er
 
 	return
 }
+
+// GetUserByID ...
+func (d *db) GetUserByID(ctx context.Context, id int64) (returnData User, err error) {
+	err = d.DB.Instance.WithContext(ctx).Where("id = ?", id).Find(&returnData).Error
+	if err != nil {
+		return
+	}
+	return
+}

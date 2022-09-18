@@ -32,6 +32,12 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 
 		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))
 		router.Action(httppkg.NewRest(http.MethodPost, "/login", handler.UserHandler().Login))
+
+		router.Route("/user", func(r chi.Router) {
+			router := r.(httppkg.Router)
+			router.Use(middleware.JWTAuthorization)
+			router.Action(httppkg.NewRest(http.MethodGet, "/profile", handler.UserHandler().Profile))
+		})
 	})
 	return
 }

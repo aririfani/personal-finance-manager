@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/aririfani/personal-finance-manager/internal/app/service"
 	"github.com/aririfani/personal-finance-manager/internal/app/service/user"
+	"github.com/golang-jwt/jwt/v4"
 	"io/ioutil"
 	"net/http"
 )
@@ -16,6 +17,9 @@ type Handler interface {
 
 	//Login ...
 	Login(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
+
+	// Profile ...
+	Profile(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 }
 
 type handler struct {
@@ -63,5 +67,14 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) (returnData inte
 	returnData, err = h.service.User.Login(ctx, request)
 	w.Header().Add("Content-Type", "application/json")
 
+	return
+}
+
+func (h *handler) Profile(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error) {
+	ctx := r.Context()
+	userID := r.Context().Value("claims").(jwt.MapClaims)["ID"].(float64)
+
+	returnData, err = h.service.User.Profile(ctx, int64(userID))
+	w.Header().Add("Content-Type", "application/json")
 	return
 }
