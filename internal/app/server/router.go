@@ -30,6 +30,8 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 			router.Action(httppkg.NewRest(http.MethodPatch, "/{id}", handler.FinanceHandler().UpdateFinance))
 			router.Action(httppkg.NewRest(http.MethodGet, "/{id}", handler.FinanceHandler().GetFinanceByID))
 			router.Action(httppkg.NewRest(http.MethodDelete, "/{id}", handler.FinanceHandler().DeleteFinanceByID))
+			router.Action(httppkg.NewRest(http.MethodGet, "/report/daily", handler.FinanceHandler().GetTotalTransactionDaily))
+			router.Action(httppkg.NewRest(http.MethodGet, "/report/monthly", handler.FinanceHandler().GetTotalTransactionMonthly))
 		})
 
 		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))

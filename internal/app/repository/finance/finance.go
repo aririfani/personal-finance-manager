@@ -67,3 +67,22 @@ func (r *repo) DeleteFinanceByID(ctx context.Context, id int64) (err error) {
 	err = r.DB.DeleteFinanceByID(ctx, id)
 	return
 }
+
+// GetTotalTransactionDaily ...
+func (r *repo) GetTotalTransactionDaily(ctx context.Context, req GetTotalTransaction) (returnData []TotalTransactionRes, err error) {
+	returnData, err = r.DB.GetTotalTransactionDaily(ctx, req)
+	if err != nil {
+		return
+	}
+	return
+}
+
+// GetTotalTransactionMonthly ...
+func (r *repo) GetTotalTransactionMonthly(ctx context.Context, req GetTotalTransaction) (returnData []TotalTransactionMonthlyRes, err error) {
+	returnData, err = r.DB.GetTotalTransactionMonthly(ctx, req)
+	if err != nil {
+		return
+	}
+
+	return
+}

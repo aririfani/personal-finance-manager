@@ -116,3 +116,26 @@ func (s *srv) DeleteFinanceByID(ctx context.Context, id int64) (returnData Finan
 	_ = deepcopier.Copy(res).To(&returnData)
 	return
 }
+
+// GetTotalTransactionDaily ...
+func (s *srv) GetTotalTransactionDaily(ctx context.Context, req GetTotalTransaction) (returnData interface{}, err error) {
+	financeRepo := finance.GetTotalTransaction{}
+	_ = deepcopier.Copy(req).To(&financeRepo)
+
+	res, err := s.repo.Finance.GetTotalTransactionDaily(ctx, financeRepo)
+
+	returnData = res
+	return
+}
+
+// GetTotalTransactionMonthly ...
+func (s *srv) GetTotalTransactionMonthly(ctx context.Context, req GetTotalTransaction) (returnData interface{}, err error) {
+	financeRepo := finance.GetTotalTransaction{}
+	_ = deepcopier.Copy(req).To(&financeRepo)
+
+	res, err := s.repo.Finance.GetTotalTransactionMonthly(ctx, financeRepo)
+
+	returnData = res
+
+	return
+}

@@ -10,7 +10,7 @@ type Finance struct {
 	Description      string    `json:"description" deepcopier:"Description"`
 	UserID           int64     `json:"user_id" deepcopier:"UserID"`
 	Type             string    `json:"type" deepcipier:"type"`
-	TransactionDate  time.Time `json:"transaction_date" deepcopier:"TransactionDate"`
+	TransactionDate  string    `json:"transaction_date" deepcopier:"TransactionDate"`
 	CreatedAt        time.Time `json:"created_at"`
 	UpdatedAt        time.Time `json:"updated_at"`
 }
@@ -33,4 +33,19 @@ type GetAllFinanceRes struct {
 	Limit    int         `json:"limit"`
 	LastPage int         `json:"last_page"`
 	Data     interface{} `json:"data"`
+}
+
+// GetTotalTransaction ...
+type GetTotalTransaction struct {
+	UserID    int64  `json:"user_id" deepcopier:"UserID"`
+	StartDate string `json:"start_date" deepcopier:"StartDate"`
+	EndDate   string `json:"end_date" deepcopier:"EndDate"`
+	Type      string `json:"type" deepcopier:"Type"`
+}
+
+// TotalTransactionRes ...
+type TotalTransactionRes struct {
+	TransactionDate time.Time `json:"transaction_date" deepcopier:"TransactionDate"`
+	Total           float64   `json:"total" deepcopier:"Total"`
+	Type            string    `json:"type" deepcopier:"Type"`
 }

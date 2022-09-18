@@ -18,6 +18,8 @@ type Handler interface {
 	UpdateFinance(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 	GetFinanceByID(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 	DeleteFinanceByID(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
+	GetTotalTransactionDaily(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
+	GetTotalTransactionMonthly(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error)
 }
 
 type handler struct {
@@ -120,5 +122,34 @@ func (h *handler) DeleteFinanceByID(w http.ResponseWriter, r *http.Request) (ret
 
 	w.Header().Add("Content-Type", "application/json")
 
+	return
+}
+
+// GetTotalTransactionDaily ...
+func (h *handler) GetTotalTransactionDaily(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error) {
+	ctx := r.Context()
+	userID := r.Context().Value("claims").(jwt.MapClaims)["ID"].(float64)
+	request := finance.GetTotalTransaction{
+		UserID: int64(userID),
+		Type:   r.URL.Query().Get("type"),
+	}
+
+	returnData, err = h.service.Finance.GetTotalTransactionDaily(ctx, request)
+
+	w.Header().Add("Content-Type", "application/json")
+	return
+}
+
+func (h *handler) GetTotalTransactionMonthly(w http.ResponseWriter, r *http.Request) (returnData interface{}, err error) {
+	ctx := r.Context()
+	userID := r.Context().Value("claims").(jwt.MapClaims)["ID"].(float64)
+	request := finance.GetTotalTransaction{
+		UserID: int64(userID),
+		Type:   r.URL.Query().Get("type"),
+	}
+
+	returnData, err = h.service.Finance.GetTotalTransactionMonthly(ctx, request)
+
+	w.Header().Add("Content-Type", "application/json")
 	return
 }

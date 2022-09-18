@@ -20,4 +20,10 @@ type Repository interface {
 
 	// DeleteFinanceByID ...
 	DeleteFinanceByID(ctx context.Context, id int64) (err error)
+
+	// GetTotalTransactionDaily ...
+	GetTotalTransactionDaily(ctx context.Context, req GetTotalTransaction) (returnData []TotalTransactionRes, err error)
+
+	// GetTotalTransactionMonthly ...
+	GetTotalTransactionMonthly(ctx context.Context, req GetTotalTransaction) (returnData []TotalTransactionMonthlyRes, err error)
 }
