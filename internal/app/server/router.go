@@ -34,7 +34,7 @@ func (s *server) Router(handler handler.Handler) (w httppkg.Router) {
 			router.Action(httppkg.NewRest(http.MethodGet, "/report/monthly", handler.FinanceHandler().GetTotalTransactionMonthly))
 		})
 
-		router.Action(httppkg.NewRest(http.MethodPost, "/user", handler.UserHandler().CreateUser))
+		router.Action(httppkg.NewRest(http.MethodPost, "/register", handler.UserHandler().CreateUser))
 		router.Action(httppkg.NewRest(http.MethodPost, "/login", handler.UserHandler().Login))
 
 		router.Route("/user", func(r chi.Router) {

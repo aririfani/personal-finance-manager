@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"github.com/aririfani/personal-finance-manager/cmd/migration"
 	"github.com/aririfani/personal-finance-manager/config"
 	"github.com/aririfani/personal-finance-manager/internal/app"
 	"github.com/aririfani/personal-finance-manager/internal/app/appcontext"
@@ -52,4 +53,15 @@ func Run() {
 	<-done
 
 	logger.Println("Server stopped")
+}
+
+func WiringMigration() (mgr migration.IMigration) {
+	appContext := appcontext.NewAppContext()
+	db, err := appContext.GetDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	mgr = migration.New(db)
+	return
 }
