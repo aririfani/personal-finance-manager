@@ -3,7 +3,9 @@ package finance
 import (
 	"context"
 	"github.com/aririfani/personal-finance-manager/internal/app/repository"
+	"github.com/aririfani/personal-finance-manager/internal/app/repository/account"
 	"github.com/aririfani/personal-finance-manager/internal/app/repository/finance"
+	accountSrv "github.com/aririfani/personal-finance-manager/internal/app/service/account"
 	"github.com/ulule/deepcopier"
 	"math"
 )
@@ -45,6 +47,7 @@ func (s *srv) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnDa
 	for _, v := range res {
 		var financeTmp finance.Res
 		_ = deepcopier.Copy(v).To(&financeTmp)
+		financeTmp.FinanceAccount = account.Account(v.Account)
 		financeRepo = append(financeRepo, financeTmp)
 	}
 
@@ -97,7 +100,28 @@ func (s *srv) GetFinanceByID(ctx context.Context, id int64) (returnData Finance,
 		return
 	}
 
-	_ = deepcopier.Copy(res).To(&returnData)
+	returnData = Finance{
+		ID:        res.ID,
+		Title:     res.Title,
+		AccountID: res.AccountID,
+		Account: accountSrv.Account{
+			ID:          res.Account.ID,
+			Name:        res.Account.Name,
+			Type:        res.Account.Type,
+			Description: res.Account.Description,
+			UserID:      res.Account.UserID,
+			CreatedAt:   res.Account.CreatedAt,
+			UpdatedAt:   res.Account.UpdatedAt,
+		},
+		Amount:          res.Amount,
+		Description:     res.Description,
+		UserID:          res.UserID,
+		Type:            res.Type,
+		TransactionDate: res.TransactionDate,
+		CreatedAt:       res.CreatedAt,
+		UpdatedAt:       res.UpdatedAt,
+	}
+
 	return
 }
 

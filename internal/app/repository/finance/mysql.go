@@ -24,14 +24,14 @@ func (d *db) CreateFinance(ctx context.Context, finance Finance) (returnData Fin
 	}
 
 	returnData = Finance{
-		ID:               finance.ID,
-		Title:            finance.Title,
-		Description:      finance.Description,
-		Amount:           finance.Amount,
-		UserID:           finance.UserID,
-		FinanceAccountID: finance.FinanceAccountID,
-		CreatedAt:        finance.CreatedAt,
-		UpdatedAt:        finance.UpdatedAt,
+		ID:          finance.ID,
+		Title:       finance.Title,
+		Description: finance.Description,
+		Amount:      finance.Amount,
+		UserID:      finance.UserID,
+		AccountID:   finance.AccountID,
+		CreatedAt:   finance.CreatedAt,
+		UpdatedAt:   finance.UpdatedAt,
 	}
 
 	return
@@ -39,7 +39,7 @@ func (d *db) CreateFinance(ctx context.Context, finance Finance) (returnData Fin
 
 // GetAllFinance ...
 func (d *db) GetAllFinance(ctx context.Context, req GetAllFinanceReq) (returnData []Finance, err error) {
-	query := d.DB.Instance.WithContext(ctx).Table("finances").Where("user_id =?", req.UserID)
+	query := d.DB.Instance.WithContext(ctx).Preload("Account").Where("user_id =?", req.UserID)
 	if req != (GetAllFinanceReq{}) {
 		offset := req.Limit * (req.Page - 1)
 		query = query.Offset(offset).Limit(req.Limit)
@@ -103,7 +103,8 @@ func (d *db) UpdateFinance(ctx context.Context, finance Finance) (returnData Fin
 
 // GetFinanceByID ...
 func (d *db) GetFinanceByID(ctx context.Context, id int64) (returnData Finance, err error) {
-	err = d.DB.Instance.WithContext(ctx).Where("id =?", id).First(&returnData).Error
+	err = d.DB.Instance.WithContext(ctx).Preload("Account").Where("id =?", id).First(&returnData).Error
+
 	if err != nil {
 		return
 	}

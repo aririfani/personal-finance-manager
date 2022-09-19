@@ -1,18 +1,22 @@
 package finance
 
-import "time"
+import (
+	"github.com/aririfani/personal-finance-manager/internal/app/service/account"
+	"time"
+)
 
 type Finance struct {
-	ID               int64     `json:"id" deepcopier:"ID"`
-	Title            string    `json:"title" deepcopier:"Title"`
-	FinanceAccountID int64     `json:"finance_account_id" deepcopier:"FinanceAccountID"`
-	Amount           float64   `json:"amount" deepcopier:"Amount"`
-	Description      string    `json:"description" deepcopier:"Description"`
-	UserID           int64     `json:"user_id" deepcopier:"UserID"`
-	Type             string    `json:"type" deepcipier:"type"`
-	TransactionDate  string    `json:"transaction_date" deepcopier:"TransactionDate"`
-	CreatedAt        time.Time `json:"created_at"`
-	UpdatedAt        time.Time `json:"updated_at"`
+	ID              int64           `json:"id" deepcopier:"ID"`
+	Title           string          `json:"title" deepcopier:"Title"`
+	AccountID       int64           `json:"account_id" deepcopier:"AccountID"`
+	Account         account.Account `json:"account"`
+	Amount          float64         `json:"amount" deepcopier:"Amount"`
+	Description     string          `json:"description" deepcopier:"Description"`
+	UserID          int64           `json:"user_id" deepcopier:"UserID"`
+	Type            string          `json:"type" deepcipier:"type"`
+	TransactionDate string          `json:"transaction_date" deepcopier:"TransactionDate"`
+	CreatedAt       time.Time       `json:"created_at"`
+	UpdatedAt       time.Time       `json:"updated_at"`
 }
 
 // GetAllFinanceReq ...

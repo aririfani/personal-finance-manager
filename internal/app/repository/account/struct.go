@@ -6,7 +6,7 @@ import (
 )
 
 type Account struct {
-	ID          int64          `json:"id" deepcopier:"ID"`
+	ID          int64          `gorm:"primaryKey" json:"id" deepcopier:"ID"`
 	Name        string         `json:"name" deepcopier:"Name"`
 	Type        string         `json:"type" deepcopier:"Type"`
 	Description string         `json:"description" deepcopier:"Description"`
